@@ -1,0 +1,43 @@
+.formLogin {
+    text-align: center;
+    background-color: black;
+    color: white;
+    margin-top: 5%;
+    margin-left: 40%;
+    margin-right: 30%;
+    width: 20%;
+    border-radius: 10%;
+    padding-top: 20%;
+    position: absolute; 
+}
+
+.form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+.input{
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    margin: 5px;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    transition: 0.5s;
+    border-radius: 10%;
+    margin: 10px;
+    border-color: white;
+    font-weight: 1000;
+}
+
+.btn:hover{
+    transition: 0.5s;
+    background-color: white;
+    color: black;
+}
