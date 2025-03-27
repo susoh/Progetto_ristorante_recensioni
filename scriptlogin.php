@@ -9,7 +9,18 @@
     $sql = 'SELECT * FROM utente u WHERE username = "' .$_SESSION["username"] . '" ';
     $result = $conn->query($sql);
     if($result->num_rows > 0) {
-       echo "utente trovato";
-       
+        $sql = 'SELECT * FROM utente u WHERE username = "' .$_SESSION["username"] . '" AND password="' . $_SESSION["password"] . '";';
+        $result = $conn->query($sql);
+        if($result->num_rows > 0) {
+            $_SESSION["login"] = true;
+            header("Location: benvenuto.php");
+        } else {
+            $_SESSION["errore"] = "p";
+            header("Location:errore_loginreg.php");
+        }
+    } else {
+        $_SESSION["errore"] = "u";
+        header("Location:errore_loginreg.php");
     }
+
 ?>
