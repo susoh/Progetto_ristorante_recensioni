@@ -2,7 +2,7 @@
     session_start();
     if($_SESSION["login"]) {
     } else {
-        header("Location:errore_loginreg.php");
+        header("Location:paginalogin.html");
     }
 ?>  
 <!DOCTYPE html>

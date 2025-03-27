@@ -11,3 +11,12 @@
     margin-left: 40%;
     margin-right: 40%;
 }
+
+.link_reg {
+    text-decoration: none;
+    color: black;
+}
+
+.link_reg:hover{
+    text-decoration: underline;
+}
