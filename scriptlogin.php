@@ -2,14 +2,17 @@
     include("connessione.php");
     session_start();
 ?>
-
+ 
 <?php
     $_SESSION["username"] = $_POST["username"];
     $_SESSION["password"] = $_POST["password"];
-    $sql = 'SELECT * FROM utente u WHERE username = "' .$_SESSION["username"] . '" ';
+    $p = $_POST["password"];
+    $hp = hash('sha256', $p);
+    var_dump($hp);
+    $sql = 'SELECT * FROM utente u WHERE u.username = "' .$_SESSION["username"] . '" ';
     $result = $conn->query($sql);
     if($result->num_rows > 0) {
-        $sql = 'SELECT * FROM utente u WHERE username = "' .$_SESSION["username"] . '" AND password="' . $_SESSION["password"] . '";';
+        $sql = 'SELECT * FROM utente u WHERE u.username = "' .$_SESSION["username"] . '" AND u.password="' . $hp . '";';
         $result = $conn->query($sql);
         if($result->num_rows > 0) {
             $_SESSION["login"] = true;
