@@ -1,10 +1,11 @@
 <?php
-include("connessione.php");
+    include("connessione.php");
     session_start();
 ?>  
 
 <?php
     $username = $_POST["username"];
+    $_SESSION["username"] = $username;
     $password = $_POST["password"];
     $nome = $_POST["nome"];
     $cognome = $_POST["cognome"];
@@ -12,10 +13,10 @@ include("connessione.php");
     $hpswd = hash('sha256', $password);
     $sql = "INSERT INTO utente (username, password, nome, cognome, email) VALUES ('$username','$hpswd','$nome','$cognome', '$email');";
     $result = $conn->query($sql);
-    var_dump($result);
     if($result) {
-        echo "true";
+        $_SESSION["login"] = true;
+        header("Location: benvenuto.php");
     } else {
-        echo "false";
+        header("Location: errore_logreg.php");
     }
 ?>
