@@ -19,11 +19,11 @@
             header("Location: benvenuto.php");
         } else {
             $_SESSION["errore"] = "p";
-            header("Location:errore_loginreg.php");
+            header("Location:paginalogin.php");
         }
     } else {
         $_SESSION["errore"] = "u";
-        header("Location:errore_loginreg.php");
+        header("Location:paginalogin.php");
     }
 
 ?>

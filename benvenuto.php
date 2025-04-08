@@ -3,7 +3,7 @@
     session_start();
     if($_SESSION["login"]) {
     } else {
-        header("Location:paginalogin.html");
+        header("Location:paginalogin.php");
     }
     $username = $_SESSION["username"];
 ?>  
@@ -17,7 +17,7 @@
     <title>Benvuenuto</title>
 </head>
 <body>
-    <div class="input rounded card" style="border: 2px solid balck; padding: 3%">
+    <div class="input rounded card" style="border: 2px solid black; padding: 3%">
     <?php 
         echo "<h2>Benvenuto: </h2>";
         $sql = "SELECT * FROM utente u WHERE u.username = \"" . $username . "\";";

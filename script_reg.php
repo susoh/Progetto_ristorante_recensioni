@@ -17,6 +17,6 @@
         $_SESSION["login"] = true;
         header("Location: benvenuto.php");
     } else {
-        header("Location: errore_logreg.php");
+        header("Location: registrazione.php");
     }
 ?>

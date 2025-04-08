@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,13 +20,25 @@
             <form method="post" action="scriptlogin.php">
                 <div class="form-group">
                   <label for="username"><b>Enter username</b></label>
+                  <?php
+                    if (isset($_SESSION["errore"]) && $_SESSION["errore"] == "u") {
+                      echo "<p style='color: red;'>Errore, username non trovato</p>";
+                      $_SESSION["errore"] = "a";
+                    }
+                  ?>
                   <input type="text" class="form-control" id="username" placeholder="Your username" name="username" required>
                 </div>
                 <div class="form-group"> 
                   <label for="password"><b>Enter password</b></label>
+                  <?php
+                    if (isset($_SESSION["errore"]) && $_SESSION["errore"] == "p") {
+                      echo "<p style='color: red;'>Errore, password non corretta</p>";
+                      $_SESSION["errore"] = "a";
+                    }
+                  ?>
                   <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 </div>
-                <a href="registrazione.html" class="link_reg">Non sei registrato?</a>
+                <a href="registrazione.php" class="link_reg">Non sei registrato?</a>
                 <button class="btn btn-primary input" type="submit">Login 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
                     <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
