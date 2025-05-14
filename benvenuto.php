@@ -40,7 +40,7 @@
         $sql = "SELECT COUNT(*) FROM recensione r JOIN utente u ON u.id_utente = r.id_utente WHERE r.id_utente = $id_utente;";
         $result = $conn->query($sql); 
         $row = $result->fetch_assoc();
-        echo "<p>Benvenuto: <b> $username </b> </p><br>";
+        echo "<h3>Benvenuto: <b style='text-decoration: underline;'> $username </b> </h3><br>";
         echo "<p>Numero recensioni effettuate: <b>" . $row["COUNT(*)"] . "</b></p><br>";
         if ($row["COUNT(*)"] > 0) {
             $sql = "SELECT r.nome, r.indirizzo, rec.voto, rec.data FROM recensione rec JOIN ristorante r ON r.id_ristorante = rec.codiceristorante WHERE rec.id_utente = $id_utente;";
@@ -64,12 +64,10 @@
             echo "<h4>Nessuna recensione effettuata.</h4><br>";
         }
     ?>
-    <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
   Inserisci nuova recensione
 </button>
 
-<!-- Modal -->
 <div class="modal fade" id="ModalRecensione" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -78,17 +76,29 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form method="post" action="script_recensione.php">
+            <div class="form-group">
+                <label for="nome"><b>Nome ristorante:</b></label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="voto"><b>Voto:</b></label>
+                <input type="number" class="form-control" id="voto" name="voto" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="invia"><b>Invia: </b></label>
+                <input type="submit" class="btn btn-primary form-control" id="invia" value="Invia recensione" required >
+            </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Inserisci recensione</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Log-Out</button>
-<!-- Modal -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -97,7 +107,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Sei sicuro di voler effettuare il Log-Out</p>
+        <p>Sei sicuro di voler effettuare il Log-Out?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>

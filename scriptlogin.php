@@ -11,12 +11,19 @@
     var_dump($hp);
     $sql = 'SELECT * FROM utente u WHERE u.username = "' .$_SESSION["username"] . '" ';
     $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $_SESSION["id_utente"] = $row["id_utente"];
     if($result->num_rows > 0) {
         $sql = 'SELECT * FROM utente u WHERE u.username = "' .$_SESSION["username"] . '" AND u.password="' . $hp . '";';
         $result = $conn->query($sql);
         if($result->num_rows > 0) {
             $_SESSION["login"] = true;
-            header("Location: benvenuto.php");
+            if ($row["admin"] == 1) {
+                header("Location:pannelloadmin.php");
+                exit;
+            } else {
+                header("Location:benvenuto.php");
+            }
         } else {
             $_SESSION["errore"] = "p";
             header("Location:paginalogin.php");
