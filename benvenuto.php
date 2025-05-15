@@ -41,6 +41,10 @@
         $result = $conn->query($sql); 
         $row = $result->fetch_assoc();
         echo "<h3>Benvenuto: <b style='text-decoration: underline;'> $username </b> </h3><br>";
+          if (isset($_SESSION["error"]) && $_SESSION["error"] == "rec") {
+            echo "<p style='color: red;'><b>Recensione già effettuata per questo ristorante!</b></p>";
+            $_SESSION["error"] = "brobiz";
+          }
         echo "<p>Numero recensioni effettuate: <b>" . $row["COUNT(*)"] . "</b></p><br>";
         if ($row["COUNT(*)"] > 0) {
             $sql = "SELECT r.nome, r.indirizzo, rec.voto, rec.data FROM recensione rec JOIN ristorante r ON r.id_ristorante = rec.codiceristorante WHERE rec.id_utente = $id_utente;";
@@ -79,7 +83,15 @@
         <form method="post" action="script_recensione.php">
             <div class="form-group">
                 <label for="nome"><b>Nome ristorante:</b></label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <select name="nome" id="nome">
+                    <?php
+                        $sql = "SELECT id_ristorante, nome FROM ristorante;";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row["id_ristorante"] . "'>" . $row["nome"] . "</option>";
+                        }
+                    ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="voto"><b>Voto:</b></label>

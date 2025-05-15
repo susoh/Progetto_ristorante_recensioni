@@ -9,7 +9,6 @@
 
     $username = $_SESSION["username"];
 
-    // Verifica se l'utente è admin
     $sql = "SELECT admin FROM utente WHERE username = '$username';";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
@@ -18,9 +17,10 @@
         header("Location:paginalogin.php");
         exit;
     }
-
-    // Recupero ristoranti e numero recensioni
-    $sql = "SELECT r.*, (SELECT COUNT(*) FROM recensione rec WHERE rec.codiceristorante = r.id_ristorante) AS numero_recensioni FROM ristorante r;";
+    $sql = "SELECT r.*, 
+                (SELECT COUNT(*) FROM recensione rec 
+                WHERE rec.codiceristorante = r.id_ristorante) 
+            AS numero_recensioni FROM ristorante r;";
     $result = $conn->query($sql);
 ?>
 
@@ -50,9 +50,9 @@
                         <tbody>';
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
-                            <td>" . htmlspecialchars($row["nome"]) . "</td>
-                            <td>" . htmlspecialchars($row["indirizzo"]) . "</td>
-                            <td>" . htmlspecialchars($row["città"]) . "</td>
+                            <td>" . $row["nome"] . "</td>
+                            <td>" . $row["indirizzo"] . "</td>
+                            <td>" . $row["citta"] . "</td>
                             <td>" . $row["numero_recensioni"] . "</td>
                           </tr>";
                 }
@@ -62,7 +62,18 @@
             }
         ?>
 
-        <h3>Inserisci un nuovo ristorante</h3>
+        <button type="button" class="btn btn-info mt-4" data-bs-toggle="modal" data-bs-target="#ModalRistorante">
+            Inserisci un nuovo ristorante
+        </button>
+
+        <div class="modal fade" id="ModalRistorante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Inserisci un nuovo ristorante</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
         <form method="post" action="inserisciristorante.php">
             <div class="form-group mb-2">
                 <label for="nome"><b>Nome ristorante:</b></label>
@@ -73,23 +84,25 @@
                 <input type="text" class="form-control" id="indirizzo" name="indirizzo" required>
             </div>
             <div class="form-group mb-3">
-                <label for="città"><b>Città:</b></label>
-                <input type="text" class="form-control" id="città" name="città" required>
+                <label for="id"><b>Id ristorante:</b></label>
+                <input type="text" class="form-control" id="id" name="id" required>
+            </div>
+            <div class="form-group mb-2">
+                <label for="citta"><b>Città:</b></label>
+                <input type="text" class="form-control" id="citta" name="citta" required>
             </div>
             <input type="submit" class="btn btn-success" value="Inserisci">
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <?php
-            if (isset($_SESSION["esito_inserimento"])) {
-                echo "<br><p><b>" . $_SESSION["esito_inserimento"] . "</b></p>";
-                unset($_SESSION["esito_inserimento"]);
-            }
-        ?>
-
-        <!-- Bottone Logout -->
         <button type="button" class="btn btn-outline-danger mt-4" data-bs-toggle="modal" data-bs-target="#logoutModal">Log-Out</button>
 
-        <!-- Modal Logout -->
         <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
