@@ -71,6 +71,43 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
   Inserisci nuova recensione
 </button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRistorante">
+  Vai al ristorante
+</button>
+
+<div class="modal fade" id="ModalRistorante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Info ristorante</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <form action="info_ristorante.php" method="post">
+        <div class="form-group">
+            <label for="nome"><b>Nome ristorante:</b></label>
+            <select name="nome" id="nome">
+                <?php
+                    $sql = "SELECT id_ristorante, nome FROM ristorante;";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["id_ristorante"] . "'>" . $row["nome"] . "</option>";
+                    }
+                ?>
+            </select>
+            <hr>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary form-control" value="Vai al ristorante selezionato" required>
+        </div>
+    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="ModalRecensione" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
