@@ -8,7 +8,7 @@
     $username = $_SESSION["username"];
 
     function query_check() {
-        $sql = "SELECT COUNT(*) FROM  utente u 
+        $sql = "SELECT COUNT(*) FROM utente u
                 JOIN recensione r
                 ON u.id_utente = r.id_utente
                 WHERE u.username = '$username' AND r.codiceristorante = ristorante.id_ristorante;";
@@ -41,34 +41,61 @@
         $result = $conn->query($sql); 
         $row = $result->fetch_assoc();
         echo "<h3>Benvenuto: <b style='text-decoration: underline;'> $username </b> </h3><br>";
-          if (isset($_SESSION["error"]) && $_SESSION["error"] == "rec") {
+
+        if (isset($_SESSION["error"]) && $_SESSION["error"] == "rec") {
             echo "<p style='color: red;'><b>Recensione già effettuata per questo ristorante!</b></p>";
             $_SESSION["error"] = "brobiz";
-          }
+        }
         echo "<p>Numero recensioni effettuate: <b>" . $row["COUNT(*)"] . "</b></p><br>";
+
         if ($row["COUNT(*)"] > 0) {
-            $sql = "SELECT r.nome, r.indirizzo, rec.voto, rec.data FROM recensione rec JOIN ristorante r ON r.id_ristorante = rec.codiceristorante WHERE rec.id_utente = $id_utente;";
+            $sql = "SELECT rec.id_recensione, r.nome, r.indirizzo, rec.voto, rec.data FROM recensione rec JOIN ristorante r ON r.id_ristorante = rec.codiceristorante WHERE rec.id_utente = $id_utente;";
             $result = $conn->query($sql); 
-            echo '<table class="table table-bordered tabella">
-                <thead>
-                 <tr>
-      <th scope="col">Nome Ristorante</th>
-      <th scope="col">Indirizzo ristorante</th>
-      <th scope="col">Voto</th>
-      <th scope="col">Data recensione</th>
-    </tr>
-  </thead>
-  <tbody>';
+            echo '<form action="elimina_recensioni.php" method="post">
+                <table class="table table-bordered tabella">
+                    <thead>
+                     <tr>
+                        <th scope="col">Seleziona</th>
+                        <th scope="col">Nome Ristorante</th>
+                        <th scope="col">Indirizzo ristorante</th>
+                        <th scope="col">Voto</th>
+                        <th scope="col">Data recensione</th>
+                    </tr>
+                  </thead>
+                  <tbody>';
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["nome"] ." </td><td>" . $row["indirizzo"] ." </td><td> ". $row["voto"] ." </td><td> ".$row["data"] . "</td></tr>";
+                echo "<tr>
+                        <td><input type='checkbox' name='recensioni[]' value='" . $row["id_recensione"] . "' class='delete-checkbox'></td>
+                        <td>" . $row["nome"] . "</td>
+                        <td>" . $row["indirizzo"] . "</td>
+                        <td>" . $row["voto"] . "</td>
+                        <td>" . $row["data"] . "</td>
+                    </tr>";
             }
-            echo "</table>";
-            
+            echo '</tbody>
+                </table>';
+                ?>
+                <button type="submit" class="btn btn-danger d-none" id="eliminaButton">Elimina</button>
+            </form>
+            <?php
         } else {
             echo "<h4>Nessuna recensione effettuata.</h4><br>";
         }
     ?>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
+
+    <script>
+        const checkboxes = document.querySelectorAll('.delete-checkbox');
+        const deleteButton = document.getElementById('eliminaButton');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Controlla se almeno una checkbox è selezionata
+                deleteButton.classList.toggle("d-none");
+            });
+        });
+    </script>
+
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
   Inserisci nuova recensione
 </button>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRistorante">
@@ -167,5 +194,7 @@
 </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-</html> 
+</html>
