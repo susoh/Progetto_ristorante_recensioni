@@ -8,7 +8,7 @@
     $username = $_SESSION["username"];
 ?>
 <?php
-    <?php
+    
     include("connessione.php");
     session_start();
     if (!$_SESSION["login"]) {
@@ -36,4 +36,3 @@
     }
 ?>
 
-?>
