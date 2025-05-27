@@ -19,7 +19,7 @@
         <div style="padding: 2%;">
             <form method="post" action="script_reg.php">
                 <div class="form-group">
-                  <label for="username"><b>Enter username</b></label>
+                  <label for="username"><b><i class="bi bi-person"></i>Enter username</b></label>
                   <input type="text" class="form-control" id="username" placeholder="Your username" name="username" required>
                 </div>
                 <div class="form-group">
@@ -35,7 +35,7 @@
                     <input type="text" class="form-control" id="Email" placeholder="Email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="password"><b>Password</b></label>
+                    <label for="password"><b><i class="bi bi-lock-fill"></i>Password</b></label>
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 </div>
                 <a href="paginalogin.php" class="link_reg">Sei già registrato?</a>

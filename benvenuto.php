@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles2.css">
     <title>Benvenuto</title>
 </head>
 <body>
@@ -89,10 +89,10 @@
         
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
-                // Controlla se almeno una checkbox è selezionata
                 deleteButton.classList.toggle("d-none");
             });
         });
+
     </script>
 
  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
@@ -192,7 +192,66 @@
     </div>
   </div>
 </div>
+<button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="changePasswordModalLabel">Cambia Password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="change_password.php">
+    <div class="form-group mb-3">
+        <label for="old_password"><b>Vecchia Password:</b></label>
+        <input type="password" class="form-control" id="old_password" name="old_password" required>
     </div>
+    <div class="form-group mb-3">
+        <label for="new_password"><b>Nuova Password:</b></label>
+        <input type="password" class="form-control" id="new_password" name="new_password" required>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary form-control" value="Cambia Password">
+    </div>
+</form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+
+if (isset($_SESSION["esito_modifica_password"])) {
+    $esito = $_SESSION["esito_modifica_password"];
+    unset($_SESSION["esito_modifica_password"]);
+
+    switch ($esito) {
+        case "successo":
+            echo "<div class='alert alert-success'>Password modificata con successo.</div>";
+            break;
+        case "vecchia_password_errata":
+            echo "<div class='alert alert-danger'>La vecchia password non è corretta.</div>";
+            break;
+        case "errore_aggiornamento":
+            echo "<div class='alert alert-danger'>Errore durante l'aggiornamento della password. Riprova.</div>";
+            break;
+        case "utente_non_trovato":
+            echo "<div class='alert alert-danger'>Utente non trovato. Effettua nuovamente il login.</div>";
+            break;
+        default:
+            echo "<div class='alert alert-warning'>Si è verificato un errore sconosciuto.</div>";
+            break;
+    }
+}
+?>
+
+    </div>
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
