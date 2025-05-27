@@ -15,7 +15,7 @@
 <body>
     <div style="border: 2px solid black;" class="input rounded card">
         <div style="text-align: center;">
-            <h2 style="font-weight: 800; color: blue;">Login utente</h2>
+            <h2 style="font-weight: 800; color: blue;">Bentornato</h2>
         </div>
         <div style="padding: 2%;">
             <form method="post" action="scriptlogin.php">
