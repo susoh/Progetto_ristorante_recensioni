@@ -55,11 +55,11 @@
                 <table class="table table-bordered tabella">
                     <thead>
                      <tr>
-                        <th scope="col">Seleziona</th>
-                        <th scope="col">Nome Ristorante</th>
-                        <th scope="col">Indirizzo ristorante</th>
-                        <th scope="col">Voto</th>
-                        <th scope="col">Data recensione</th>
+                        <th class="tabella-sfondo" scope="col">Nome Ristorante</th>
+                        <th class="tabella-sfondo" scope="col">Indirizzo ristorante</th>
+                        <th class="tabella-sfondo" scope="col">Voto</th>
+                        <th class="tabella-sfondo" scope="col">Data recensione</th>
+                        <th class="tabella-sfondo" scope="col">Seleziona</th>
                     </tr>
                   </thead>
                   <tbody>';
@@ -86,13 +86,22 @@
     <script>
         const checkboxes = document.querySelectorAll('.delete-checkbox');
         const deleteButton = document.getElementById('eliminaButton');
-        
+
+        function updateDeleteButton() {
+            const checkedCount = document.querySelectorAll('.delete-checkbox:checked').length;
+            if (checkedCount > 0) {
+                deleteButton.classList.remove("d-none");
+            } else {
+                deleteButton.classList.add("d-none");
+            }
+        }
+
         checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                deleteButton.classList.toggle("d-none");
-            });
+            checkbox.addEventListener('change', updateDeleteButton);
         });
 
+        // Ensure correct state on page load
+        updateDeleteButton();
     </script>
 
  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRecensione">
@@ -250,10 +259,6 @@ if (isset($_SESSION["esito_modifica_password"])) {
 ?>
 
     </div>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

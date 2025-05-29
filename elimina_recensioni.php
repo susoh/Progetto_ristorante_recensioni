@@ -6,7 +6,7 @@
         $recensioni_id = $_POST['recensioni'];
         $i = 0;
         foreach ($recensioni_id as $id_recensione) {
-            i++;
+            $i++;
             $sql = "DELETE FROM recensione WHERE id_recensione = $id_recensione";
             $conn->query($sql);
         }

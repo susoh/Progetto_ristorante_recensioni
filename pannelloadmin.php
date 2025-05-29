@@ -100,16 +100,79 @@ $result = $conn->query($sql);
                                 <input type="text" class="form-control" id="citta" name="citta" required>
                             </div>
                             <div class="form-group mb-2">
-                                <label for="latitudine"><b>Latitudine:</b></label>
-                                <input type="text" class="form-control" id="latitudine" name="latitudine" required>
+                                <label><b>Coordinate:</b></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="coord_mode" id="coordManual" value="manual" checked>
+                                    <label class="form-check-label" for="coordManual">
+                                        Inserisci manualmente
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="coord_mode" id="coordMap" value="map">
+                                    <label class="form-check-label" for="coordMap">
+                                        Seleziona su mappa
+                                    </label>
+                                </div>
+                                <div id="coordInputs">
+                                    <div class="form-group mb-2">
+                                        <label for="latitudine"><b>Latitudine:</b></label>
+                                        <input type="text" class="form-control" id="latitudine" name="latitudine" required>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="longitudine"><b>Longitudine:</b></label>
+                                        <input type="text" class="form-control" id="longitudine" name="longitudine" required>
+                                    </div>
+                                </div>
+                                <div id="mapContainer" style="height: 300px; display: none; margin-bottom: 10px;">
+                                    <div id="map" style="height: 100%;"></div>
+                                </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <label for="longitudine"><b>Longitudine:</b></label>
-                                <input type="text" class="form-control" id="longitudine" name="longitudine" required>
-                            </div>
-                            </script>
                             <input type="submit" class="btn btn-success" value="Inserisci">
                         </form>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const coordManual = document.getElementById('coordManual');
+                            const coordMap = document.getElementById('coordMap');
+                            const coordInputs = document.getElementById('coordInputs');
+                            const mapContainer = document.getElementById('mapContainer');
+                            let map, marker;
+
+                            function showManual() {
+                                coordInputs.style.display = '';
+                                mapContainer.style.display = 'none';
+                            }
+                            function showMap() {
+                                coordInputs.style.display = 'none';
+                                mapContainer.style.display = '';
+                                if (!map) {
+                                    map = L.map('map').setView([41.9028, 12.4964], 6); // Center Italy
+                                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                        maxZoom: 19,
+                                    }).addTo(map);
+                                    map.on('click', function(e) {
+                                        if (marker) {
+                                            marker.setLatLng(e.latlng);
+                                        } else {
+                                            marker = L.marker(e.latlng).addTo(map);
+                                        }
+                                        document.getElementById('latitudine').value = e.latlng.lat.toFixed(6);
+                                        document.getElementById('longitudine').value = e.latlng.lng.toFixed(6);
+                                    });
+                                }
+                                setTimeout(() => { map.invalidateSize(); }, 200); // Fix map display in modal
+                            }
+
+                            coordManual.addEventListener('change', function() {
+                                if (this.checked) showManual();
+                            });
+                            coordMap.addEventListener('change', function() {
+                                if (this.checked) showMap();
+                            });
+
+                            // Default state
+                            showManual();
+                        });
+                        </script>
                     </div>
 
                     <div class="modal-footer">

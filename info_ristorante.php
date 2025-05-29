@@ -9,8 +9,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Info ristorante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles2.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
@@ -45,33 +46,40 @@
 
     echo "<a class='back-link' href='javascript:history.back()'>Torna indietro</a>";
 ?>
-    <?php
+    <div width="80%" style="text-align: center; margin-top: 20px; margin-left: 20%; margin-right: 20%;">
+        <?php
     $sql = "SELECT latitudine, longitudine FROM ristorante WHERE id_ristorante = '$id_ristorante';";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     ?>
-    <div id='map' style='width: 600px; height: 400px;'></div>
+    <div id='map' style='width: 100%; height: 500px;'></div>
     <script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
     <script>
-        const defaultLat = 41.8719;
-            const defaultLng = 12.5674;
-            const map = L.map('map').setView([defaultLat, defaultLng], 6);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-            let marker = null;
-            map.on('click', function (e) {
-                const lat = e.latlng.lat.toFixed(6);
-                const lng = e.latlng.lng.toFixed(6);
-                if (marker) {
-                    map.removeLayer(marker);
-                }
-                marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup("Posizione selezionata: " + lat + ", " + lng)
-                    .openPopup();
-                document.getElementById('latitudine').value = lat;
-                document.getElementById('longitudine').value = lng;
-            });
+        <?php
+            if ($row && isset($row['latitudine']) && isset($row['longitudine'])) {
+                $lat = floatval($row['latitudine']);
+                $lng = floatval($row['longitudine']);
+                echo "const dbLat = $lat;\n";
+                echo "const dbLng = $lng;\n";
+                echo "const hasCoords = true;\n";
+            } else {
+                echo "const dbLat = 41.8719;\n";
+                echo "const dbLng = 12.5674;\n";
+                echo "const hasCoords = false;\n";
+            }
+        ?>
+        const map = L.map('map').setView([dbLat, dbLng], hasCoords ? 100 : 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = null;
+        if (hasCoords) {
+            marker = L.marker([dbLat, dbLng]).addTo(map)
+                .bindPopup("Posizione ristorante: " + dbLat + ", " + dbLng)
+                .openPopup();
+        }
     </script>
+    </div>
 </body>
 </html>

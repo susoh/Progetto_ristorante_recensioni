@@ -1,161 +1,103 @@
-/* General Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    padding: 20px;
-    color: #333;
+    background: linear-gradient(135deg, #e0f7fa, #80deea, #4dd0e1);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    padding: 2rem;
 }
 
-/* Welcome Container */
+/* Contenitore centrale */
 .benvenuto {
     background-color: white;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    padding: 30px !important;
-}
-
-/* Headings */
-h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-h4 {
-    color: #7f8c8d;
-    margin: 20px 0;
-}
-
-/* Buttons */
-.btn {
-    margin: 5px;
-    padding: 8px 15px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background-color: #3498db;
-    border-color: #3498db;
-}
-
-.btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-.btn-danger {
-    background-color: #e74c3c;
-    border-color: #e74c3c;
-}
-
-.btn-danger:hover {
-    background-color: #c0392b;
-    border-color: #c0392b;
-}
-
-.btn-outline-danger {
-    color: #e74c3c;
-    border-color: #e74c3c;
-}
-
-.btn-outline-danger:hover {
-    background-color: #e74c3c;
-    color: white;
-}
-
-/* Table Styles */
-.tabella {
-    margin: 20px 0;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 900px;
     width: 100%;
-    border-collapse: collapse;
+    margin: auto;
 }
 
-.tabella th {
-    background-color: #3498db;
-    color: white;
-    padding: 12px;
-    text-align: left;
+/* Titolo e messaggi */
+h3 {
+    color: #0d6efd;
+    font-weight: 700;
 }
 
-.tabella td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+.alert {
+    margin-top: 1rem;
 }
 
-.tabella tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Modal Styles */
-.modal-content {
+/* Tabella recensioni */
+.tabella {
+    margin-top: 1rem;
+    background-color: #fff;
     border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabella thead {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.tabella th,
+.tabella td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Checkbox allineate */
+.delete-checkbox {
+    transform: scale(1.2);
+}
+
+/* Bottoni */
+.btn {
+    margin: 0.3rem;
+}
+
+#eliminaButton {
+    margin-top: 1rem;
+}
+
+/* Modal migliorato */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .modal-header {
-    background-color: #3498db;
+    background-color: #0d6efd;
     color: white;
-    border-radius: 10px 10px 0 0;
 }
 
 .modal-title {
-    font-weight: bold;
+    font-weight: 600;
 }
 
-/* Form Elements */
-.form-group {
-    margin-bottom: 15px;
+.modal-footer button {
+    min-width: 120px;
 }
 
-.form-control {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%;
+/* Form nei modali */
+.modal-body .form-group {
+    margin-bottom: 1rem;
 }
 
+/* Dropdown styling */
 select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
     width: 100%;
-    margin-bottom: 15px;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    margin-top: 0.5rem;
 }
 
-/* Error Message */
-p[style*="color: red"] {
-    background-color: #ffebee;
-    padding: 10px;
-    border-radius: 5px;
-    border-left: 4px solid #e74c3c;
-}
-
-/* Responsive Adjustments */
+/* Responsive */
 @media (max-width: 768px) {
     .benvenuto {
-        padding: 15px !important;
+        padding: 1rem;
     }
-    
-    .tabella {
-        font-size: 14px;
-    }
-    
-    .btn {
-        width: 100%;
-        margin: 5px 0;
-    }
-}
 
-/* Checkbox styling */
-.delete-checkbox {
-    transform: scale(1.3);
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-/* Button container for better spacing */
-.button-container {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    h3 {
+        font-size: 1.3rem;
+    }
 }
