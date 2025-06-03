@@ -26,8 +26,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles2.css">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script><link rel="stylesheet" href="./styles2.css">
     <title>Benvenuto</title>
 </head>
 <body>
@@ -55,23 +59,33 @@
                 <table class="table table-bordered tabella">
                     <thead>
                      <tr>
+                        <th class="tabella-sfondo" scope="col">Seleziona</th>
                         <th class="tabella-sfondo" scope="col">Nome Ristorante</th>
                         <th class="tabella-sfondo" scope="col">Indirizzo ristorante</th>
                         <th class="tabella-sfondo" scope="col">Voto</th>
                         <th class="tabella-sfondo" scope="col">Data recensione</th>
-                        <th class="tabella-sfondo" scope="col">Seleziona</th>
                     </tr>
                   </thead>
                   <tbody>';
             while ($row = $result->fetch_assoc()) {
+              $i = $row["voto"];
                 echo "<tr>
                         <td><input type='checkbox' name='recensioni[]' value='" . $row["id_recensione"] . "' class='delete-checkbox'></td>
                         <td>" . $row["nome"] . "</td>
                         <td>" . $row["indirizzo"] . "</td>
-                        <td>" . $row["voto"] . "</td>
-                        <td>" . $row["data"] . "</td>
+                        <td>";
+                        for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $row["voto"]) {
+                            echo '<i class="fas fa-star text-warning"></i>';
+                        } else {
+                            echo '<i class="far fa-star text-warning"></i>';
+                        }
+                      }
+                        echo ' </td>
+                        <td>' . $row["data"] . "</td>
+
                     </tr>";
-            }
+              }
             echo '</tbody>
                 </table>';
                 ?>
@@ -167,8 +181,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="voto"><b>Voto:</b></label>
-                <input type="number" class="form-control" id="voto" name="voto" min="1" max="5" required>
+              <label for="voto"><b>Voto:</b></label>
+              <input type="number" class="form-control" name="voto" id="voto" min="1" max="5" require>
             </div>
             <div class="form-group">
                 <label for="invia"><b>Invia: </b></label>
@@ -259,6 +273,16 @@ if (isset($_SESSION["esito_modifica_password"])) {
 ?>
 
     </div>
+    <script>
+    document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
+        star.addEventListener('click', function() {
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+    });
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

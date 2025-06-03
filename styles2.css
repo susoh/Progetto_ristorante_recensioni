@@ -25,7 +25,6 @@ h3 {
     margin-top: 1rem;
 }
 
-/* Tabella recensioni */
 .tabella {
     margin-top: 1rem;
     background-color: #fff;
@@ -43,13 +42,9 @@ h3 {
     vertical-align: middle;
     text-align: center;
 }
-
-/* Checkbox allineate */
 .delete-checkbox {
     transform: scale(1.2);
 }
-
-/* Bottoni */
 .btn {
     margin: 0.3rem;
 }
@@ -58,7 +53,6 @@ h3 {
     margin-top: 1rem;
 }
 
-/* Modal migliorato */
 .modal-content {
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -77,12 +71,10 @@ h3 {
     min-width: 120px;
 }
 
-/* Form nei modali */
 .modal-body .form-group {
     margin-bottom: 1rem;
 }
 
-/* Dropdown styling */
 select {
     width: 100%;
     padding: 0.5rem;
@@ -90,6 +82,34 @@ select {
     border: 1px solid #ced4da;
     margin-top: 0.5rem;
 }
+
+.checked {
+    color: orange;
+}
+
+.star-rating {
+        direction: rtl;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        color: #ddd;
+        font-size: 24px;
+        padding: 0 2px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover~label,
+    .star-rating input:checked~label {
+        color: #ffc107;
+    }
 
 /* Responsive */
 @media (max-width: 768px) {
